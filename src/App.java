@@ -2,23 +2,26 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
 
 public class App extends Application {
-    public static void main(String[] args) throws Exception {
-        launch(args);
-    }
 
     private InfoCenter infoCenter;
 
     @Override
-    public void start(Stage primaryStage)
-    {
-        BorderPane root = new BorderPane();
-        Scene scene = new Scene(root, UIConstants.APP_WIDTH, UIConstants.APP_HEIGHT);
-        initLayout(root);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Tic-Tac-Toe");
-        primaryStage.show();
+
+    public void start(Stage primaryStage) {
+        try {
+            BorderPane root = new BorderPane();
+            Scene scene = new Scene(root, UIConstants.APP_WIDTH, UIConstants.APP_HEIGHT);
+            initLayout(root);
+            primaryStage.setScene(scene);
+            primaryStage.setTitle("Tic-Tac-Toe");
+            primaryStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initLayout(BorderPane root) {
@@ -28,13 +31,28 @@ public class App extends Application {
 
     private void initInfoCenter (BorderPane root){
         infoCenter = new InfoCenter();
-
+        infoCenter.setStartButtonOnAction(startNewGame());
         root.getChildren().add(infoCenter.getStackPane());
         
     }
 
+    private EventHandler<ActionEvent> startNewGame() {
+        return new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent e) {
+                infoCenter.hideStartButton();
+                infoCenter.updateMessage("Player X Turn");
+                System.out.println("Game is Starting!");
+            }
+        };
+    }
+
     private void initTileBoard (BorderPane root){
 
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
 }
