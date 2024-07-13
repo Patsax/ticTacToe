@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 public class App extends Application {
 
     private InfoCenter infoCenter;
+    private TileBoard tileBoard;
 
     @Override
 
@@ -42,13 +43,14 @@ public class App extends Application {
             public void handle(ActionEvent e) {
                 infoCenter.hideStartButton();
                 infoCenter.updateMessage("Player X Turn");
-                System.out.println("Game is Starting!");
+                tileBoard.startNewGame();
             }
         };
     }
 
     private void initTileBoard (BorderPane root){
-
+        tileBoard = new TileBoard(infoCenter);
+        root.getChildren().add(tileBoard.getStackPane());
     }
 
     public static void main(String[] args) {
